@@ -1,24 +1,62 @@
-import React from "react";
-
-//include images into your bundle
-import rigoImage from "../../img/rigo-baby.jpg";
-
+import React, { useState } from "react";
+import Todos from "./todos.jsx";
 //create your first component
 const Home = () => {
+	const [title, setTitle] = useState('Hola');
+	const [todos, setTodos] = useState([]);
+	function handleChange(e){
+		const value= e.target.value
+		setTitle(value);
+	}
+
+	function handleSubmit(e){
+		e.preventDefault();
+		const newTodo = {
+			id: crypto.randomUUID(),
+			title: title,
+			completed: false
+		}
+		const temp = [... todos];
+		temp.unshift(newTodo);
+
+		setTodos(temp);
+
+		setTitle("");
+
+	}
+
+	function handleUpdate(id,value){
+		const temp = [... todos];
+		const item = temp.find(item => item.id === id);
+		item.title = value;
+		setTodos(temp);
+	}
+
+	function handleDelete(id){
+		const temp = todos.filter(item => item.id !== id);
+
+		setTodos(temp);
+
+	}
 	return (
-		<div className="text-center">
-			<h1 className="text-center mt-5">Hello Rigo!</h1>
-			<p>
-				<img src={rigoImage} />
-			</p>
-			<a href="#" className="btn btn-success">
-				If you see this green button... bootstrap is working...
-			</a>
-			<p>
-				Made by{" "}
-				<a href="http://www.4geeksacademy.com">4Geeks Academy</a>, with
-				love!
-			</p>
+		<div className="todoContainer">
+			<form className="todoCreateForm" onSubmit={handleSubmit}>
+				<input onChange={handleChange} className="todoInput" value={title}/>
+				<input 
+				onClick={handleSubmit} 
+				type="submit" 
+				value="Create todo" 
+				className="buttonCreate"
+				/>
+
+			</form>
+
+			<div className="todosContainer">
+				{
+					todos.map(item => (
+						<Todos key={item.id} item={item} onUpdate={handleUpdate} onDelete={handleDelete}/>
+					))}
+			</div>
 		</div>
 	);
 };
