@@ -10,3 +10,30 @@
     import 'relative/path/to/stylesheet.scss';
 
 */
+
+.todoContainer {
+    height: 500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    background-color: black;
+}
+
+.todoCreateForm {
+    margin: 10px;
+    background-color: lavender;
+    width: 30%;
+    height: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.todosContainer {
+    background-color: lavender;
+    height: 20%;
+    width: 30%;
+    text-align: center;
+}
